@@ -2,8 +2,25 @@
 
 namespace App\Utils;
 
+use Psr\Http\Message\ResponseInterface;
+
 class WorkOut
 {
+
+    public function managerResponse (ResponseInterface $response, $return, $param) {
+
+        return ($return['status'] !== 200) ?
+            $response->withJson($return, $return['status']) :
+            $response->withJson($return[$param], 200);
+
+    }
+
+    public function getData()
+    {
+        date_default_timezone_set("America/Recife");
+        return date('Y-m-d H:i:s');
+    }
+
     public function removeMask($oldValue, $type)
     {
         switch ($type) {
