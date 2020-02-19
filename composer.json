@@ -1,4 +1,10 @@
 {
+
+    "scripts": {
+        "sql:validate": "vendor/bin/doctrine orm:validate-schema",
+        "sql:submit": "vendor/bin/doctrine orm:schema-tool:update --force",
+        "sql": "vendor/bin/doctrine orm:schema-tool:update --dump-sql"
+    },
     "require": {
         "slim/slim": "3.12",
         "phpmailer/phpmailer": "^6.0",
