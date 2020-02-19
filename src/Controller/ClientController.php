@@ -34,8 +34,6 @@ class ClientController
 
         if (is_null($client->getCpf())) return array('status' => 400, 'message' => "ERROR", 'result' => 'CPF não informada!');
 
-        if (is_null($client->getPhone())) return array('status' => 400, 'message' => "ERROR", 'result' => 'Telefone não informado!');
-
         if (is_null($address->getCep())) return array('status' => 400, 'message' => "ERROR", 'result' => 'Cep não informado!');
 
         if (is_null($address->getNumber())) return array('status' => 400, 'message' => "ERROR", 'result' => 'Número do endereço não informado!');

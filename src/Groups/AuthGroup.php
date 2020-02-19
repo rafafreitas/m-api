@@ -29,19 +29,11 @@ $app->group('/auth', function (){
         file_put_contents($file, 'REQUEST GET = /login/ ' . " => "  .  $WorkOut->getData()  . PHP_EOL,FILE_APPEND);
 
         $authController = new AuthController();
+        $workOut = new WorkOut();
         $return = $authController->login($account);
 
-        if ($return['status'] !== 200){
-            return $response->withJson($return, $return['status']);
-            die;
-        }else{
-            $auth = new Authorization();
-            $jwt = $auth->gerarToken($return['user']);
-
-            return $response->withHeader('Authorization', $jwt)
-                ->withJson($return['user'], 200);
-            die;
-        }
+        return $workOut->managerResponseToken($response, $return, 'user');
+        die;
     });
 
     $this->get('/checkEmail/{email}', function (ServerRequestInterface $request, ResponseInterface $response, $args) {

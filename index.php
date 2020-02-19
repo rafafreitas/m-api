@@ -20,6 +20,8 @@ require_once 'vendor/autoload.php';
 require 'src/Config/Slim.php';
 
 require 'src/Groups/AddressGroup.php';
+require 'src/Groups/AuthGroup.php';
+require 'src/Groups/ClientGroup.php';
 
 $app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function($req, $res) {
     $handler = $this->notFoundHandler;

@@ -2,10 +2,26 @@
 
 namespace App\Utils;
 
+use App\Config\Authorization;
 use Psr\Http\Message\ResponseInterface;
 
 class WorkOut
 {
+
+    public function managerResponseToken (ResponseInterface $response, $return, $param) {
+
+        if ($return['status'] !== 200){
+            return $response->withJson($return, $return['status']);
+        }else{
+            $auth = new Authorization();
+            $jwt = $auth->gerarToken($return['user']);
+
+            return $response
+                ->withHeader('Authorization', $jwt)
+                ->withJson($return[$param], 200);
+        }
+
+    }
 
     public function managerResponse (ResponseInterface $response, $return, $param) {
 

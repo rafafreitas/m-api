@@ -21,9 +21,9 @@ class AuthDAO
 
             $accountObj = $entityManager->getRepository(Account::class)->findBy(array(
                 'email'  => $account->getEmail(),
-                'senha'  => $account->getPass(),
-                'grupo'  => $account->getGroup(),
-                'ativo'  => $account->getActive(),
+                'pass'  => $account->getPass(),
+                'group'  => $account->getGroup(),
+                'active'  => $account->getActive(),
             ), array(
                 'id' => 'ASC'
             ), 1);

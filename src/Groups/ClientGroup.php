@@ -9,6 +9,7 @@
 use App\Basics\Account;
 use App\Basics\Client;
 use App\Basics\Address;
+use App\Config\Authorization;
 use App\Controller\ClientController;
 use App\Utils\WorkOut;
 use Psr\Http\Message\ServerRequestInterface;
@@ -39,8 +40,12 @@ $app->group('/client', function (){
         $address->setCep(isset($data['cep'])? $workOut->removeMask($data['cep'], 'cep') : null);
         $address->setNumber(isset($data['number'])?$data['number']: null);
         $address->setComplement(isset($data['complement'])?$data['complement']: null);
-        $retorno = $clientController->insert($account, $client, $address);
 
+        $return = $clientController->insert($account, $client, $address);
+
+        $workOut = new WorkOut();
+
+        return $workOut->managerResponseToken($response, $return, 'user');
 
     });
 
