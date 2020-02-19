@@ -59,6 +59,12 @@ class Client
      */
     private $account;
 
+    /**
+     * Um cliente tem muitas transações
+     * @OneToMany(targetEntity="Transaction", mappedBy="client")
+     */
+    private $transactions;
+
     public function convertArray(){
         return array(
             "id" => $this->id,
@@ -231,6 +237,24 @@ class Client
     public function setAccount($account)
     {
         $this->account = $account;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTransactions()
+    {
+        return $this->transactions;
+    }
+
+    /**
+     * @param mixed $transactions
+     * @return Client
+     */
+    public function setTransactions($transactions)
+    {
+        $this->transactions = $transactions;
         return $this;
     }
 }
