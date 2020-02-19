@@ -9,7 +9,7 @@ define('SECRET_KEY','sua_senha');
 define('ALGORITHM','HS256');
 class Authorization
 {
-    public function gerarToken($obj){
+    public function createToken($obj){
         $tokenId    = base64_encode(random_bytes (32));
         $issuedAt   = time();
         $notBefore  = $issuedAt + 10;
@@ -34,7 +34,7 @@ class Authorization
         return $jwt;
     }
 
-    public function verificarToken($request) {
+    public function validateToken($request) {
         $authorization = $request->getHeaderLine("Authorization");
 
         if (trim($authorization) == "") {

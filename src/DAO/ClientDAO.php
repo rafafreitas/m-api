@@ -40,7 +40,7 @@ class ClientDAO
         }
     }
 
-    public function insert(Account $account, Client $client, Address $address) {
+    public function insert(Account $account, Client $client) {
 
         try {
 
@@ -56,24 +56,11 @@ class ClientDAO
             if (!empty($contaObj))
                 return array('status' => 400, 'message' => "ERROR", 'result' => 'Este e-mail já esta em uso por outra conta!');
 
-            $usuarioObj = $entityManager->getRepository(Client::class)->findBy(array(
-                'cpf'  => $client->getCpf(),
-            ), array(
-                'id' => 'ASC'
-            ), 1);
-
-            if (!empty($usuarioObj))
-                return array('status' => 400, 'message' => "ERROR", 'result' => 'Este CPF já esta em uso por outra conta!');
-
             $entityManager->persist($account);
             $entityManager->flush();
 
             $client->setAccount($account);
             $entityManager->persist($client);
-            $entityManager->flush();
-
-            $address->setClient($client);
-            $entityManager->persist($address);
             $entityManager->flush();
 
             $authDAO = new AuthDAO();

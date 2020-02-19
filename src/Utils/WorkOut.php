@@ -14,7 +14,13 @@ class WorkOut
             return $response->withJson($return, $return['status']);
         }else{
             $auth = new Authorization();
-            $jwt = $auth->gerarToken($return['user']);
+
+            $content = array(
+                'ac_id' => $return['user']['id'],
+                'us_id' => $return['user']['account']['id'],
+            );
+
+            $jwt = $auth->createToken($content);
 
             return $response
                 ->withHeader('Authorization', $jwt)

@@ -22,7 +22,7 @@ class AuthDAO
             $accountObj = $entityManager->getRepository(Account::class)->findBy(array(
                 'email'  => $account->getEmail(),
                 'pass'  => $account->getPass(),
-                'group'  => $account->getGroup(),
+                'groupId'  => $account->getGroup(),
                 'active'  => $account->getActive(),
             ), array(
                 'id' => 'ASC'
@@ -35,12 +35,11 @@ class AuthDAO
                 switch ($account->getGroup()){
                     case 1:
                         $clientObj = $entityManager->getRepository(Client::class)->findBy(array(
-                            'conta'  => $accountObj[0]->getId(),
+                            'account'  => $accountObj[0]->getId(),
                         ), array(
                             'id' => 'ASC'
                         ), 1);
 
-                        $clientObj[0]->setConta($accountObj[0]->convertArray());
                         break;
                     default:
                         return array(
@@ -110,7 +109,7 @@ class AuthDAO
 
             $accountObj = $entityManager->getRepository(Account::class)->findBy(array(
                 'email' => $account->getEmail(),
-                'grupo' => $account->getGroup()
+                'grupoId' => $account->getGroup()
             ), array(
                 'id' => 'ASC'
             ), 1);

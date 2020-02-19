@@ -34,8 +34,8 @@ class Credentials
             self::$charset = 'utf8';
         }else{
             //Prod
-//            self::$host = 'localhost';
-             self::$host = 'sql50.main-hosting.eu';
+            // self::$host = 'localhost';
+            self::$host = 'sql50.main-hosting.eu';
             self::$dbName = 'u900272964_mapi';
             self::$user = 'u900272964_mapi';
             self::$password = 'hO#ˆ&YO&()7rC1';

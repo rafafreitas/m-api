@@ -28,20 +28,10 @@ $app->group('/client', function (){
 
         $clientController = new ClientController();
 
-        $workOut = new WorkOut();
         $client = new Client();
-        $client->setName(isset($data['nome'])?$data['nome']: null);
-        $client->setCpf(isset($data['cpf'])?$workOut->removeMask($data['cpf'], 'cpf'): null);
-        $client->setPhone(isset($data['phone'])?$workOut->removeMask($data['phone'], 'phone'): null);
-        $client->setSex(isset($data['sex'])?$data['sex']: null);
-        $client->setBirth(isset($data['birth'])?$workOut->removeMask($data['birth'], 'birth'): null);
+        $client->setName(isset($data['name'])?$data['name']: null);
 
-        $address = new Address();
-        $address->setCep(isset($data['cep'])? $workOut->removeMask($data['cep'], 'cep') : null);
-        $address->setNumber(isset($data['number'])?$data['number']: null);
-        $address->setComplement(isset($data['complement'])?$data['complement']: null);
-
-        $return = $clientController->insert($account, $client, $address);
+        $return = $clientController->insert($account, $client);
 
         $workOut = new WorkOut();
 

@@ -20,13 +20,13 @@ class Account
      */
     private $email;
     /**
-     * @Column(type="string", length=40)
+     * @Column(type="text")
      */
     private $pass;
     /**
      * @Column(type="integer")
      */
-    private $group;
+    private $groupId;
     /**
      * @Column(type="datetime")
      */
@@ -55,7 +55,7 @@ class Account
         return array(
             "id" => $this->id,
             "email" => $this->email,
-            "group" => $this->group,
+            "group" => $this->groupId,
             "create_date" => $this->create_date->format('Y-m-d H:i:s'),
             "active" => $this->active,
             "social" => $this->social
@@ -121,7 +121,7 @@ class Account
      */
     public function getGroup()
     {
-        return $this->group;
+        return $this->groupId;
     }
 
     /**
@@ -130,7 +130,7 @@ class Account
      */
     public function setGroup($group)
     {
-        $this->group = $group;
+        $this->groupId = $group;
         return $this;
     }
 
