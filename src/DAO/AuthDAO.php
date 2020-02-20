@@ -108,8 +108,7 @@ class AuthDAO
             $entityManager = $doctrine->getEntityManager();
 
             $accountObj = $entityManager->getRepository(Account::class)->findBy(array(
-                'email' => $account->getEmail(),
-                'grupoId' => $account->getGroup()
+                'email' => $account->getEmail()
             ), array(
                 'id' => 'ASC'
             ), 1);
@@ -123,7 +122,7 @@ class AuthDAO
                 $newPass = strtoupper(uniqid());
                 $newPass = str_split($newPass, 6);
 
-                $accountObj[0]->setSenha(sha1($newPass[0]));
+                $accountObj[0]->setPass(sha1($newPass[0]));
 
                 $entityManager->flush();
                 $email = new Email('');
@@ -156,10 +155,10 @@ class AuthDAO
 
             $accountObj = $entityManager->find(Account::class, $account->getId());
 
-            if (sha1($old) !== $accountObj->getSenha())
+            if (sha1($old) !== $accountObj->getPass())
                 return array('status' => 400, 'message' => "ERROR", 'result' => 'A senha informada não corresponde com a registrada!');
 
-            $accountObj->setSenha(sha1($new));
+            $accountObj->setPass(sha1($new));
 
             $entityManager->flush();
 
@@ -197,15 +196,14 @@ class AuthDAO
                 return array('status' => 401, 'message' => "ERROR", 'result' => 'Usuário não existe!');
             }else{
 
-                switch ($account->getGroup()){
+                switch ($accountObj[0]->getGroup()){
                     case 1:
                         $clientObj = $entityManager->getRepository(Client::class)->findBy(array(
-                            'conta'  => $accountObj[0]->getId(),
+                            'account'  => $accountObj[0]->getId(),
                         ), array(
                             'id' => 'ASC'
                         ), 1);
 
-                        $clientObj[0]->setConta($accountObj[0]->convertArray());
                         break;
                     default:
                         return array(

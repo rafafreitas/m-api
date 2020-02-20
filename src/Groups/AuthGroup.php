@@ -55,7 +55,6 @@ $app->group('/auth', function (){
         $data = $request->getParsedBody();
         $account = new Account();
         $account->setEmail(isset($data['email'])?$data['email']: null);
-        $account->setGroup(isset($data['group'])?$data['group']: null);
 
         $authController = new AuthController();
         $workOut = new WorkOut();
@@ -69,7 +68,7 @@ $app->group('/auth', function (){
 
         $data = $request->getParsedBody();
         $auth = new Authorization();
-        $objJwt = $auth->verificarToken($request);
+        $objJwt = $auth->validateToken($request);
 
         if($objJwt['status'] != 200){
             return $response->withJson($objJwt, $objJwt['status']);
@@ -77,7 +76,7 @@ $app->group('/auth', function (){
         }
 
         $account = new Account();
-        $account->setId(isset($objJwt['token']->data->conta->id)?$objJwt['token']->data->conta->id : null);
+        $account->setId(isset($objJwt['token']->data->ac_id)?$objJwt['token']->data->ac_id : null);
         $new = (isset($data['new_pass'])) ? $data['new_pass']: null;
         $old = (isset($data['old_pass'])) ? $data['old_pass']: null;
 
@@ -92,7 +91,7 @@ $app->group('/auth', function (){
     $this->get('/getProfile', function (ServerRequestInterface $request, ResponseInterface $response, $args) {
 
         $auth = new Authorization();
-        $objJwt = $auth->verificarToken($request);
+        $objJwt = $auth->validateToken($request);
         if($objJwt['status'] != 200){
             return $response->withJson($objJwt, $objJwt['status']);
             die;
@@ -101,7 +100,7 @@ $app->group('/auth', function (){
         $authController = new AuthController();
         $workOut = new WorkOut();
         $account = new Account();
-        $account->setId(isset($objJwt['token']->data->conta->id)?$objJwt['token']->data->conta->id : null);
+        $account->setId(isset($objJwt['token']->data->ac_id)?$objJwt['token']->data->ac_id : null);
 
         $return = $authController->getProfile($account);
         return $workOut->managerResponse($response, $return, 'result');

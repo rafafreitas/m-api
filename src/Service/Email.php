@@ -16,9 +16,9 @@ class Email
     private $host = "smtp.hostinger.com.br";
     private $port = 587;
     private $fromName = "M_API";
-    private $fromEmail = 'no-reply@servidordetestes.pe.hu';
-    private $userName = 'no-reply@servidordetestes.pe.hu';
-    private $password = '~]vBo4b;l0';
+    private $fromEmail = 'no-reply@rafafreitas.com';
+    private $userName = 'no-reply@rafafreitas.com';
+    private $password = 'dvS|^Rlu14#$';
     private $subject;
 
     /**
@@ -38,7 +38,7 @@ class Email
             $mail->CharSet = $this->charset;
             $mail->IsSMTP();
             $mail->Host = $this->host;
-//            $mail->SMTPSecure = 'ssl';
+            // $mail->SMTPSecure = 'ssl';
             $mail->SMTPAuth = true;
             $mail->Port = $this->port;
             $mail->Username = $this->userName;

@@ -48,10 +48,6 @@ class AuthController
             return array('status' => 400, 'message' => "ERROR", 'result' => 'E-Mail não informado!');
             die;
         }
-        if (empty($account->getGroup())) {
-            return array('status' => 400, 'message' => "ERROR", 'result' => 'Grupo não informado!');
-            die;
-        }
 
         $authDAO = new AuthDAO();
         return $authDAO->reset($account);
