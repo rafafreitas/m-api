@@ -42,4 +42,47 @@ $app->group('/transactions', function (){
 
     });
 
+    $this->get('/{limit}', function (ServerRequestInterface $request, ResponseInterface $response, $args) {
+
+        $auth = new Authorization();
+        $objJwt = $auth->validateToken($request);
+        if($objJwt['status'] != 200){
+            return $response->withJson($objJwt, $objJwt['status']);
+            die;
+        }
+
+        $workOut = new WorkOut();
+        $transaction = new Transaction();
+        $transaction->setClient(isset($objJwt['token']->data->us_id)?$objJwt['token']->data->us_id : null);
+        $limit = isset($args['limit'])?$args['limit']: null;
+
+        $transactionController = new TransactionController();
+        $return = $transactionController->listAllLimit($transaction, $limit);
+
+        return $workOut->managerResponse($response, $return, 'result');
+        die;
+
+    });
+
+    $this->get('/list/details', function (ServerRequestInterface $request, ResponseInterface $response, $args) {
+
+        $auth = new Authorization();
+        $objJwt = $auth->validateToken($request);
+        if($objJwt['status'] != 200){
+            return $response->withJson($objJwt, $objJwt['status']);
+            die;
+        }
+
+        $workOut = new WorkOut();
+        $transaction = new Transaction();
+        $transaction->setClient(isset($objJwt['token']->data->us_id)?$objJwt['token']->data->us_id : null);
+
+        $transactionController = new TransactionController();
+        $return = $transactionController->listToday($transaction);
+
+        return $workOut->managerResponse($response, $return, 'result');
+        die;
+
+    });
+
 });

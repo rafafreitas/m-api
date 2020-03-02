@@ -27,4 +27,24 @@ class TransactionController
 
     }
 
+    public function listAllLimit(Transaction $transaction, $limit)
+    {
+
+        if (is_null($transaction->getClient())) return array('status' => 400, 'message' => "ERROR", 'result' => 'Cliente não informado!');
+
+        $transactionDAO = new TransactionDAO();
+        return $transactionDAO->listAllLimit($transaction, $limit);
+
+    }
+
+    public function listToday(Transaction $transaction)
+    {
+
+        if (is_null($transaction->getClient())) return array('status' => 400, 'message' => "ERROR", 'result' => 'Cliente não informado!');
+
+        $transactionDAO = new TransactionDAO();
+        return $transactionDAO->listToday($transaction);
+
+    }
+
 }
