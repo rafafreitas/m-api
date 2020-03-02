@@ -54,16 +54,16 @@ class Client
 
     /**
      * Um cliente possui uma conta.
-     * @OneToOne(targetEntity="account")
+     * @OneToOne(targetEntity="Account")
      * @JoinColumn(name="account_id", referencedColumnName="id")
      */
     private $account;
 
     /**
-     * Um cliente tem muitas transações
+     * Um cliente tem muitos transações
      * @OneToMany(targetEntity="Transaction", mappedBy="client")
      */
-    private $transactions;
+    private $transaction;
 
     public function convertArray(){
         return array(
@@ -243,18 +243,18 @@ class Client
     /**
      * @return mixed
      */
-    public function getTransactions()
+    public function getTransaction()
     {
-        return $this->transactions;
+        return $this->transaction;
     }
 
     /**
      * @param mixed $transactions
      * @return Client
      */
-    public function setTransactions($transactions)
+    public function setTransaction($transaction)
     {
-        $this->transactions = $transactions;
+        $this->transaction = $transaction;
         return $this;
     }
 }

@@ -38,10 +38,9 @@ class Transaction
 
     /**
      * Muitas transações tem um cliente
-     * @ManyToOne(targetEntity="Client", inversedBy="transactions")
+     * @ManyToOne(targetEntity="Client", inversedBy="transaction")
      * @JoinColumn(name="client_id", referencedColumnName="id")
      */
-
     private $client;
 
     /**
