@@ -143,4 +143,59 @@ class TransactionDAO
         }
     }
 
+    public function balance(Transaction $transaction){
+
+        try {
+
+            $doctrine = new Doctrine();
+            $entityManager = $doctrine->getEntityManager();
+
+            $transactionbj = $entityManager->getRepository(Transaction::class)->findBy(
+                array('client' => $transaction->getClient()),
+                array('create_date'=>'DESC')
+            );
+
+            if (empty($transactionbj)) {
+                return array(
+                    'status'    => 200,
+                    'message'   => "SUCCESS",
+                    'qtd'       => 0,
+                    'result'    =>  array(
+                        'today' => [],
+                        'previous' => [],
+                    )
+                );
+            }else {
+
+                $input = 0;
+                $output = 0;
+                foreach ($transactionbj as $transactionItem){
+
+                    if ($transactionItem->getType() === 1){
+                        $input += $transactionItem->getValue();
+                    } else {
+                        $output += $transactionItem->getValue();
+                    }
+                }
+
+                return array(
+                    'status'    => 200,
+                    'message'   => "SUCCESS",
+                    'result'    =>  array(
+                        'balance' => $input - $output
+                    )
+                );
+            }
+
+        } catch (\Exception $ex) {
+            return array(
+                'status'    => 500,
+                'message'   => "ERROR",
+                'result'    => 'Erro na execução da instrução!',
+                'CODE'      => $ex->getCode(),
+                'Exception' => $ex->getMessage(),
+            );
+        }
+    }
+
 }

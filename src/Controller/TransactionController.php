@@ -47,4 +47,14 @@ class TransactionController
 
     }
 
+    public function balance(Transaction $transaction)
+    {
+
+        if (is_null($transaction->getClient())) return array('status' => 400, 'message' => "ERROR", 'result' => 'Cliente não informado!');
+
+        $transactionDAO = new TransactionDAO();
+        return $transactionDAO->balance($transaction);
+
+    }
+
 }
