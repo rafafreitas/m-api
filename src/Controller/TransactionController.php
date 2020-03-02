@@ -4,13 +4,14 @@
 namespace App\Controller;
 
 
+use App\Basics\Client;
 use App\Basics\Transaction;
 use App\DAO\TransactionDAO;
 
 class TransactionController
 {
 
-    public function insert(Transaction $transaction)
+    public function insert(Transaction $transaction, Client $client)
     {
 
         if (is_null($transaction->getTitle())) return array('status' => 400, 'message' => "ERROR", 'result' => 'Identificação não informada!');
@@ -19,10 +20,10 @@ class TransactionController
 
         if (is_null($transaction->getValue())) return array('status' => 400, 'message' => "ERROR", 'result' => 'Valor não informado!');
 
-        if (is_null($transaction->getClient())) return array('status' => 400, 'message' => "ERROR", 'result' => 'Cliente não informado!');
+        if (is_null($client->getId())) return array('status' => 400, 'message' => "ERROR", 'result' => 'Cliente não informado!');
 
         $transactionDAO = new TransactionDAO();
-        return $transactionDAO->insert($transaction);
+        return $transactionDAO->insert($transaction, $client);
 
     }
 

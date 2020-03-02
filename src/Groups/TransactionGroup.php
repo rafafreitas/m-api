@@ -6,6 +6,7 @@
  * Time: 16:28
  */
 
+use App\Basics\Client;
 use App\Basics\Transaction;
 use App\Config\Authorization;
 use App\Controller\TransactionController;
@@ -26,14 +27,15 @@ $app->group('/transactions', function (){
 
         $data = $request->getParsedBody();
         $transaction = new Transaction();
+        $client = new Client();
         $workOut = new WorkOut();
-        $transaction->setClient(isset($objJwt['token']->data->us_id)?$objJwt['token']->data->us_id : null);
+        $client->setId(isset($objJwt['token']->data->us_id)?$objJwt['token']->data->us_id : null);
         $transaction->setTitle(isset($data['title'])?$data['title']: null);
-        $transaction->setValue(isset($data['value'])? $workOut->removeMask($data['value'], 'money'): null);
+        $transaction->setValue(isset($data['value'])? $data['value']: null);
         $transaction->setType(isset($data['type'])?$data['type']: null);
 
         $transactionController = new TransactionController();
-        $return = $transactionController->insert($transaction);
+        $return = $transactionController->insert($transaction, $client);
 
         return $workOut->managerResponse($response, $return, 'result');
         die;

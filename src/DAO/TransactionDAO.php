@@ -4,18 +4,22 @@
 namespace App\DAO;
 
 
+use App\Basics\Account;
 use App\Basics\Transaction;
 use App\Basics\Client;
 use App\Config\Doctrine;
 
 class TransactionDAO
 {
-    public function insert(Transaction $transaction) {
+    public function insert(Transaction $transaction, Client $client) {
 
         try {
 
             $doctrine = new Doctrine();
             $entityManager = $doctrine->getEntityManager();
+
+            $clientObj = $entityManager->find(Client::class, $client->getId());
+            $transaction->setClient($clientObj);
 
             $entityManager->persist($transaction);
             $entityManager->flush();
