@@ -22,6 +22,7 @@ require 'src/Config/Slim.php';
 require 'src/Groups/AddressGroup.php';
 require 'src/Groups/AuthGroup.php';
 require 'src/Groups/ClientGroup.php';
+require 'src/Groups/TransactionGroup.php';
 
 $app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function($req, $res) {
     $handler = $this->notFoundHandler;
